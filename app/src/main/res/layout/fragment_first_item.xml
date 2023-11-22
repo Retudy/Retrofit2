@@ -12,10 +12,10 @@
         tools:layout_editor_absoluteX="-76dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <TextView
-            android:id="@+id/rvitem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/rv_picture"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
@@ -27,12 +27,13 @@
             android:id="@+id/rvnum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:text="num"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvitem"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.085"
+            app:layout_constraintStart_toEndOf="@+id/rv_picture"
+            app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

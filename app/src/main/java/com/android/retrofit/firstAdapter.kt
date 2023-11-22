@@ -3,8 +3,9 @@ package com.android.retrofit
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import com.android.retrofit.data.firstModel
 import com.android.retrofit.databinding.FragmentFirstItemBinding
 
 class firstAdapter(val items : MutableList<firstModel>):RecyclerView.Adapter<firstAdapter.ViewHolder>() {
@@ -36,9 +37,9 @@ class firstAdapter(val items : MutableList<firstModel>):RecyclerView.Adapter<fir
 
     inner class ViewHolder(private val binding:FragmentFirstItemBinding) : RecyclerView.ViewHolder(binding.root) {
         //2번
-        fun bindItems(item:firstModel) {
+        fun bindItems(item: firstModel) {
             binding.rvnum.text = item.num
-            binding.rvitem.text = item.picture
+            binding.rvPicture.load(item.picture)
 
 
 
