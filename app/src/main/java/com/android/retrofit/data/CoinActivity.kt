@@ -48,11 +48,11 @@ class CoinActivity : AppCompatActivity() {
                 //호출데이터
                 val tickerinfo = response.body()
 
-                binding.resultText.append("status :${tickerinfo?.status}")
-                binding.resultText.append("closing_price :${tickerinfo?.data?.closing_price}")
-                binding.resultText.append("opening_price :${tickerinfo?.data?.opening_price}")
-                binding.resultText.append("max_price :${tickerinfo?.data?.max_price}")
-                binding.resultText.append("min_price :${tickerinfo?.data?.min_price}")
+                binding.resultText.append("status :${tickerinfo?.status}\n")
+                binding.resultText.append("closing_price :${tickerinfo?.data?.closing_price}\n")
+                binding.resultText.append("opening_price :${tickerinfo?.data?.opening_price}\n")
+                binding.resultText.append("max_price :${tickerinfo?.data?.max_price}\n")
+                binding.resultText.append("min_price :${tickerinfo?.data?.min_price}\n")
             }
 
             override fun onFailure(call: Call<Ticker>, t: Throwable) {
