@@ -9,10 +9,10 @@ api문서:https://apidocs.bithumb.com/reference/%ED%98%B8%EA%B0%80-%EC%A0%95%EB%
 
 View: CoinActivity, activity_coin (xml)<br/>
 Data Class: Ticker,Data<br/>
-interface: Apiservice<br/>
-
+interface: Apiservice
+<br/>
 CoinActivity에서
-<br/><br/>
+<br/>
 1.Retrofit 객체초기화<br/>
 2.service 객체생성<br/>
 3.Call 객체 생성<br/>
