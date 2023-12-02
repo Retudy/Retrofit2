@@ -10,7 +10,7 @@ api문서:https://apidocs.bithumb.com/reference/%ED%98%B8%EA%B0%80-%EC%A0%95%EB%
 View: CoinActivity, activity_coin (xml)<br/>
 Data Class: Ticker,Data<br/>
 interface: Apiservice<br/>
-<br/><br/><br/>
+<br/><br/>
 
 CoinActivity에서
 <br/><br/>
@@ -30,10 +30,10 @@ CoinActivity 를 실행하고 editText에 코인정보를 입력하고, 조회�
 
 실행화면<br/><br/>
 
-<img width="322" alt="스크린샷 2023-12-03 오전 6 10 10" src="https://github.com/Retudy/Retrofit2/assets/129308578/d2c2a88a-8c18-44f9-9396-c19352dbcd32">
+<img width="322" alt="스크린샷 2023-12-03 오전 6 10 10" src="https://github.com/Retudy/Retrofit2/assets/129308578/d2c2a88a-8c18-44f9-9396-c19352dbcd32"><br/>
 
-** 앞으로 할일 **
-1.유튜브api,공공데이터api,네이버 api 등을 recyclerview에 표시해봅니다,
-2.서버와 통신하여 받아와서 recyclerview에 표시된 데이터들을 다른 fragment or activity에 보낸뒤 표시해봅니다. (데이터전달 intent or bundle)
-3.데이터를 저장하고,출력 해봅니다 ( Room, Sharedpreferences )
-4.viewModel을 사용하고, mvvm 아키텍쳐로 코드를 리팩토링합니다. (본프로젝트 시에)
+** 앞으로 할일 **<br/>
+1.유튜브api,공공데이터api,네이버 api 등을 recyclerview에 표시해봅니다,<br/>
+2.서버와 통신하여 받아와서 recyclerview에 표시된 데이터들을 다른 fragment or activity에 보낸뒤 표시해봅니다. (데이터전달 intent or bundle)<br/>
+3.데이터를 저장하고,출력 해봅니다 ( Room, Sharedpreferences )<br/>
+4.viewModel을 사용하고, mvvm 아키텍쳐로 코드를 리팩토링합니다. (본프로젝트 시에)<br/>
