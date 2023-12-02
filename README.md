@@ -14,7 +14,7 @@ CoinActivity에서
 1.Retrofit 객체초기화<br/>
 2.service 객체생성<br/>
 3.Call 객체 생성<br/>
-4.네트워크 통신<br/><br/>
+4.네트워크 통신<br/>
 
 을통해서 EditText 에 입력받은 값을 통해서 textView에 표시합니다.<br/><br/>
 
