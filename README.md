@@ -4,7 +4,7 @@
 api문서:https://apidocs.bithumb.com/reference/%ED%98%B8%EA%B0%80-%EC%A0%95%EB%B3%B4-%EC%A1%B0%ED%9A%8C<br/>
 
 
-구조<br/><br/>
+구조<br/>
 
 View: CoinActivity, activity_coin (xml)<br/>
 Data Class: Ticker,Data<br/>
