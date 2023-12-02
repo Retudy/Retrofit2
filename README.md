@@ -17,9 +17,9 @@ CoinActivity에서
 4.네트워크 통신<br/>
 
 을통해서 EditText 에 입력받은 값을 통해서 textView에 표시합니다.<br/>
-필요한 데이터는 response.body() 를 통해 꺼내오게 됩니다.<br/><br/>
+필요한 데이터는 response.body() 를 통해 꺼내오게 됩니다.<br/>
 
-작성자: youneeo<br/><br/><br/><br/>
+작성자: youneeo<br/><br/><br/>
 
 
 CoinActivity 를 실행하고 editText에 코인정보를 입력하고, 조회버튼을 누르면 조회됩니다.<br/><br/>
