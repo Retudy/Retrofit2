@@ -10,7 +10,6 @@ api문서:https://apidocs.bithumb.com/reference/%ED%98%B8%EA%B0%80-%EC%A0%95%EB%
 View: CoinActivity, activity_coin (xml)<br/>
 Data Class: Ticker,Data<br/>
 interface: Apiservice<br/>
-<br/><br/>
 
 CoinActivity에서
 <br/><br/>
