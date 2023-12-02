@@ -1,10 +1,5 @@
 # 빗썸 api 호출 
 ## 작성자: youneeo
-<br/>
-
-api문서:https://apidocs.bithumb.com/reference/%ED%98%B8%EA%B0%80-%EC%A0%95%EB%B3%B4-%EC%A1%B0%ED%9A%8C<br/>
-참고:https://www.youtube.com/watch?v=YKV1a1YkuKE
-
 
 구조<br/>
 
@@ -32,3 +27,6 @@ CoinActivity 를 실행하고 editText에 코인정보를 입력하고, 조회�
 2.서버와 통신하여 받아와서 recyclerview에 표시된 데이터들을 다른 fragment or activity에 보낸뒤 표시해봅니다. (데이터전달 intent or bundle)<br/>
 3.데이터를 저장하고,출력 해봅니다 ( Room, Sharedpreferences )<br/>
 4.viewModel을 사용하고, mvvm 아키텍쳐로 코드를 리팩토링합니다. (본프로젝트 시에)<br/>
+
+api문서:https://apidocs.bithumb.com/reference/%ED%98%B8%EA%B0%80-%EC%A0%95%EB%B3%B4-%EC%A1%B0%ED%9A%8C<br/>
+참고:https://www.youtube.com/watch?v=YKV1a1YkuKE
