@@ -17,6 +17,8 @@ CoinActivity에서
 
 을통해서 EditText 에 입력받은 값을 통해서 textView에 표시합니다.
 
+필요한 데이터는 response.body() 를 통해 꺼내오게 됩니다.
+
 작성자: youneeo
 
 
