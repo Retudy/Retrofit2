@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.android.retrofit.data.firstModel
+import com.android.retrofit.data.DustItem
 import com.android.retrofit.databinding.FragmentFirstItemBinding
 
-class firstAdapter(val items: MutableList<firstModel>) :
+class firstAdapter(val items: MutableList<DustItem>) :
     RecyclerView.Adapter<firstAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): firstAdapter.ViewHolder {
         //4번
@@ -42,9 +42,12 @@ class firstAdapter(val items: MutableList<firstModel>) :
     inner class ViewHolder(private val binding: FragmentFirstItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         //2번
-        fun bindItems(item: firstModel) {
-            binding.rvnum.text = item.num
-            binding.rvPicture.load(item.picture)
+        fun bindItems(item: DustItem) {
+            binding.textView2.text = item.sidoName
+            binding.rvnum.text = item.pm10Value
+            binding.rvDivNm.text = item.pm25Grade
+//            binding.rvPicture.load(item.picture)
+
 
 
         }
