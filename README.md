@@ -16,8 +16,7 @@ CoinActivity에서
 3.Call 객체 생성<br/>
 4.네트워크 통신<br/>
 
-을통해서 EditText 에 입력받은 값을 통해서 textView에 표시합니다.<br/><br/>
-
+을통해서 EditText 에 입력받은 값을 통해서 textView에 표시합니다.<br/>
 필요한 데이터는 response.body() 를 통해 꺼내오게 됩니다.<br/><br/>
 
 작성자: youneeo<br/><br/><br/><br/>
