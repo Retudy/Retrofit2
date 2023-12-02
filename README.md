@@ -1,6 +1,21 @@
 # Retrofit2
 레트로핏을 이용한 api 호출 연습
 
+구조
+
+View: CoinActivity, activity_coin (xml)
+Data Class: Ticker,Data
+interface: Apiservice
+
+
+CoinActivity에서
+
+1.Retrofit 객체초기화
+2.service 객체생성
+3.Call 객체 생성
+4.네트워크 통신
+
+을통해서 EditText 에 입력받은 값을 통해서 textView에 표시합니다.
 
 작성자: youneeo
 
