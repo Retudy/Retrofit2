@@ -1,12 +1,9 @@
 # Retrofit2
 레트로핏을 이용한 api 호출 연습
 
-***
-*
+
 작성자: youneeo
-*
-**
-***
+
 
 CoinActivity 를 실행하고 editText에 코인정보를 입력하면 조회됩니다.
 
