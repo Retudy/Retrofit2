@@ -5,7 +5,7 @@
 작성자: youneeo
 
 
-CoinActivity 를 실행하고 editText에 코인정보를 입력하면 조회됩니다.
+CoinActivity 를 실행하고 editText에 코인정보를 입력하고, 조회버튼을 누르면 조회됩니다.
 
 실행화면
 
