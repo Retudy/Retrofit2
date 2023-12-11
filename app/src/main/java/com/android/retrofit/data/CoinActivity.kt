@@ -2,8 +2,13 @@ package com.android.retrofit.data
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import com.android.retrofit.ApiService
 import com.android.retrofit.databinding.ActivityCoinBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,16 +27,19 @@ class CoinActivity : AppCompatActivity() {
             //초기화
             binding.resultText.text = ""
             //api 호출
-            apiRequest()
+            lifecycleScope.launch { //코루틴스코프로 돌려봄 (1차)
+                apiRequest()
+            }
         }
     }
+
     /**
      * HTTP api 호출
      * 작성자: 윤동현
      */
-    private fun apiRequest(){
-        //1. retrofit 객체 생성
-        val retrofit : Retrofit = Retrofit.Builder()
+    private fun apiRequest() {
+
+        val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.bithumb.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -43,7 +51,7 @@ class CoinActivity : AppCompatActivity() {
         val tickerCall = apiService.getCoinTicker(coinNm, "KRW")
 
         //4. 네트워크 통신
-        tickerCall.enqueue(object : Callback<Ticker>{
+        tickerCall.enqueue(object : Callback<Ticker> {
             override fun onResponse(call: Call<Ticker>, response: Response<Ticker>) {
                 //호출데이터
                 val tickerinfo = response.body()
@@ -61,5 +69,6 @@ class CoinActivity : AppCompatActivity() {
             }
 
         })
+
     }
 }
