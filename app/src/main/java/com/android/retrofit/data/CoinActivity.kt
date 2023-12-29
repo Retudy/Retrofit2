@@ -2,12 +2,9 @@ package com.android.retrofit.data
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.android.retrofit.ApiService
 import com.android.retrofit.databinding.ActivityCoinBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,7 +35,7 @@ class CoinActivity : AppCompatActivity() {
      * 작성자: 윤동현
      */
     private fun apiRequest() {
-
+        //1.Retrofit 객체 초기화
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.bithumb.com/")
             .addConverterFactory(GsonConverterFactory.create())

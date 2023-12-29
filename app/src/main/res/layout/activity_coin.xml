@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="조회" />
+        android:text="@string/abb" />
 
 
 </LinearLayout>

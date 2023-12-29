@@ -44,9 +44,8 @@ class firstFragment : Fragment() {
 
 
         val rv = binding.rvFirstFragment
-
-
         rv.layoutManager = LinearLayoutManager(context)
+
     }
 
 
