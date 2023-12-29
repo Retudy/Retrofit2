@@ -1,16 +1,15 @@
-package com.android.retrofit
+package com.android.retrofit.first
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.android.retrofit.data.DustItem
 import com.android.retrofit.databinding.FragmentFirstItemBinding
 
 class firstAdapter(val items: MutableList<DustItem>) :
     RecyclerView.Adapter<firstAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): firstAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         //4번
         val binding =
             FragmentFirstItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,7 +23,7 @@ class firstAdapter(val items: MutableList<DustItem>) :
 
     var itemClick: ItemClick? = null
 
-    override fun onBindViewHolder(holder: firstAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (itemClick != null) {
             holder.itemView.setOnClickListener { v ->
                 itemClick?.onClick(v, position)
