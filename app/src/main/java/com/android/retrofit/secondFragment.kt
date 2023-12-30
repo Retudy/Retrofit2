@@ -1,59 +1,149 @@
 package com.android.retrofit
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import coil.load
+import com.android.retrofit.data.MapleData
+import com.android.retrofit.data.Ocid
+import com.android.retrofit.databinding.FragmentSecondBinding
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [secondFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class secondFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    companion object {
+        fun newInstance(): secondFragment = secondFragment()
+    }
+
+    private var _binding: FragmentSecondBinding? = null
+    private val binding get() = _binding!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
+        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment second.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            secondFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnSearch.setOnClickListener {
+
+            lifecycleScope.launch {
+                apiRequest()
             }
+
+        }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun apiRequest() {
+        //1.Retrofit 객체 초기화
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://open.api.nexon.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        //2. service 객체 생성
+        val apiservicemaple: ApiServiceMaple = retrofit.create(ApiServiceMaple::class.java)
+
+        //3. Call객체 생성
+        val mapleNickName = binding.etInputUserName.text.toString()
+        val mapleCall = apiservicemaple.getocid(
+            "test_a600e45ce67a8f1dd0d4466e7f3b0825b700dccabfd4466c92b690c34cc4d412c0f454bba65c5206af27084210f66392",
+            mapleNickName,
+        )
+
+
+        //4. 네트워크 통신
+        mapleCall.enqueue(object : Callback<MapleData> {
+            override fun onResponse(call: Call<MapleData>, response: Response<MapleData>) {
+
+                val mapleinfo = response.body()
+
+                if (mapleinfo != null) {
+                    var getOcid = "${mapleinfo.ocid}"
+                    Log.d("getocid","${getOcid}")
+
+                    val charaterCall = apiservicemaple.getCharacter(
+                        "test_a600e45ce67a8f1dd0d4466e7f3b0825b700dccabfd4466c92b690c34cc4d412c0f454bba65c5206af27084210f66392",
+                        "${getOcid}",
+                        "2023-12-29"
+                    )
+                    if (getOcid != null) {
+                        Log.d("characterCall 시작직전","${getOcid}")
+
+                        charaterCall.enqueue(object : Callback<MapleData> {
+                            override fun onResponse(
+                                call: Call<MapleData>,
+                                response: Response<MapleData>
+                            ) {
+
+                                val mapleinfo2 = response.body()
+                                Log.d("mapleinfo2test","mapleinfo2: ${mapleinfo2}")
+
+                                if (mapleinfo2 != null) {
+
+                                    Log.d("mapleinfo2success","mapleinfo2: ${mapleinfo2}")
+
+
+                                    binding.tvWorldName.text = "서버: ${mapleinfo2.worldName}"
+                                    binding.tvCharacterGender.text = "성별: ${mapleinfo2.characterGender}"
+                                    binding.ivCharacterImage.load(mapleinfo2.characterImage)
+
+
+                                } else {
+
+                                    Log.d("mapleinfo2","mapleinfo2: ${mapleinfo2}")
+                                }
+                            }
+
+                            override fun onFailure(call: Call<MapleData>, t: Throwable) {
+
+                                Log.e("Debug", "API Request Failed", t)
+                                call.cancel()
+                            }
+
+                        })
+                    }
+
+
+                } else {
+
+                    Log.e("Fuxxk", "mapleinfo: ${mapleinfo}")
+                    Log.d("Howtypelog", "etInputUserName: ${binding.etInputUserName}")
+                    Log.d("Fuxxk", "response: ${response}")
+                }
+
+            }
+
+            override fun onFailure(call: Call<MapleData>, t: Throwable) {
+
+                Log.e("Debug", "API Request Failed", t)
+                call.cancel()
+            }
+
+        })
+
+    }
+
 }
