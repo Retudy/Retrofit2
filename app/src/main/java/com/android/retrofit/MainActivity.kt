@@ -2,8 +2,6 @@ package com.android.retrofit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
 import com.android.retrofit.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout

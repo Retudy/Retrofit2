@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".secondFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tv_character_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="캐릭터명이 표시됩니다."
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_world_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="월드명이 표시됩니다."
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:id="@+id/tv_character_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="성별이 표시됩니다."
+        android:layout_gravity="center"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/et_input_user_name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="조회"
+        android:layout_gravity="center"/>
+
+    <ImageView
+        android:id="@+id/iv_character_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp" />
+
+</LinearLayout>

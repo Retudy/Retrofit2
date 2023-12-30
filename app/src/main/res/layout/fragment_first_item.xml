@@ -27,14 +27,36 @@
             android:id="@+id/rvnum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="4dp"
             android:layout_weight="1"
-            android:text="num"
+            android:text="전화번호"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.085"
+            app:layout_constraintHorizontal_bias="0.044"
             app:layout_constraintStart_toEndOf="@+id/rv_picture"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/rv_div_nm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="5dp"
+            android:text="구분"
+            app:layout_constraintStart_toEndOf="@+id/rv_picture"
+            app:layout_constraintTop_toBottomOf="@+id/rvnum" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="8dp"
+            android:text="주소"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rv_picture"
+            app:layout_constraintTop_toBottomOf="@+id/rv_div_nm" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
