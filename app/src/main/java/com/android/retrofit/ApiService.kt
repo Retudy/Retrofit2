@@ -11,5 +11,6 @@ interface ApiService {
        fun getCoinTicker(
             @Path("order_currency") orderCurrency: String,
             @Path("payment_currency") paymentCurrency: String
+
         ): Call<Ticker>
 }
