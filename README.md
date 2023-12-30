@@ -30,3 +30,4 @@ CoinActivity 를 실행하고 editText에 코인정보를 입력하고, 조회�
 
 api문서:https://apidocs.bithumb.com/reference/%ED%98%B8%EA%B0%80-%EC%A0%95%EB%B3%B4-%EC%A1%B0%ED%9A%8C<br/>
 참고:https://www.youtube.com/watch?v=YKV1a1YkuKE
+
