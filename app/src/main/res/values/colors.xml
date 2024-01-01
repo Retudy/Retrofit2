@@ -3,4 +3,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="maplecolor">#E9C46A</color>
+    <color name="searchoutline">#555555</color>
+    <color name="Gray100">#F5F5F5</color>
 </resources>
