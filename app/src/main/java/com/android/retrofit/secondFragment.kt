@@ -26,7 +26,7 @@ class secondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
-    private val TestApiKey: String =getString(R.string.nexon_api_key)
+    private val testApiKey: String =getString(R.string.nexon_api_key)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,7 +96,7 @@ class secondFragment : Fragment() {
         val mapleNickName = binding.searchView.text.toString()
         Log.d("getNickName", "${mapleNickName}")
         val mapleCall = apiservicemaple.getocid(
-            TestApiKey,
+            testApiKey,
             mapleNickName,
         )
         Log.d("getmapleCall","${mapleCall}")
@@ -113,7 +113,7 @@ class secondFragment : Fragment() {
                     Log.d("getocid", "${getOcid}")
 
                     val charaterCall = apiservicemaple.getCharacter(
-                        "test_a600e45ce67a8f1dd0d4466e7f3b0825b700dccabfd4466c92b690c34cc4d412c0f454bba65c5206af27084210f66392",
+                        testApiKey,
                         "${getOcid}",
                         "2023-12-30"
                     )
@@ -189,7 +189,7 @@ class secondFragment : Fragment() {
 
         val mapleNickName = binding.searchView.text.toString()
         val mapleCall = apiservicemaple.getocid(
-            TestApiKey,
+            testApiKey,
             "블랑",
         )
 
@@ -203,7 +203,7 @@ class secondFragment : Fragment() {
                     Log.d("getocid", "${getOcid}")
 
                     val charaterCall = apiservicemaple.getCharacter(
-                        TestApiKey,
+                        testApiKey,
                         "${getOcid}",
                         "2023-12-29"
                     )
