@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.android.retrofit.data.MapleData
-import com.android.retrofit.data.Ocid
 import com.android.retrofit.databinding.FragmentSecondBinding
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -26,6 +26,7 @@ class secondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
     private val binding get() = _binding!!
+    private val testApiKey: String =getString(R.string.nexon_api_key)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,13 +44,38 @@ class secondFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnSearch.setOnClickListener {
-
-            lifecycleScope.launch {
-                apiRequest()
+        binding.btnNo.setOnClickListener {
+            binding.apply {
+                boxSearch.isVisible = true
+                blancYesOrNo.isVisible = false
+            }
+            binding.btnSearch.setOnClickListener {
+                binding.apply {
+                    boxSearch.isVisible = false
+                    boxResult.isVisible = true
+                }
+                lifecycleScope.launch {
+                    apiRequest()
+                }
             }
 
         }
+        binding.btnYes.setOnClickListener {
+            binding.apply {
+                binding.boxResult.isVisible = true
+                binding.blancYesOrNo.isVisible = false
+            }
+            lifecycleScope.launch {
+                blancRequest()
+            }
+        }
+        binding.ivBackButton.setOnClickListener{
+            binding.apply {
+                boxResult.isVisible = false
+                boxSearch.isVisible = true
+            }
+        }
+
     }
 
     override fun onDestroyView() {
@@ -67,11 +93,13 @@ class secondFragment : Fragment() {
         val apiservicemaple: ApiServiceMaple = retrofit.create(ApiServiceMaple::class.java)
 
         //3. Call객체 생성
-        val mapleNickName = binding.etInputUserName.text.toString()
+        val mapleNickName = binding.searchView.text.toString()
+        Log.d("getNickName", "${mapleNickName}")
         val mapleCall = apiservicemaple.getocid(
-            "test_a600e45ce67a8f1dd0d4466e7f3b0825b700dccabfd4466c92b690c34cc4d412c0f454bba65c5206af27084210f66392",
+            testApiKey,
             mapleNickName,
         )
+        Log.d("getmapleCall","${mapleCall}")
 
 
         //4. 네트워크 통신
@@ -82,15 +110,15 @@ class secondFragment : Fragment() {
 
                 if (mapleinfo != null) {
                     var getOcid = "${mapleinfo.ocid}"
-                    Log.d("getocid","${getOcid}")
+                    Log.d("getocid", "${getOcid}")
 
                     val charaterCall = apiservicemaple.getCharacter(
-                        "test_a600e45ce67a8f1dd0d4466e7f3b0825b700dccabfd4466c92b690c34cc4d412c0f454bba65c5206af27084210f66392",
+                        testApiKey,
                         "${getOcid}",
-                        "2023-12-29"
+                        "2023-12-30"
                     )
                     if (getOcid != null) {
-                        Log.d("characterCall 시작직전","${getOcid}")
+                        Log.d("characterCall 시작직전", "${getOcid}")
 
                         charaterCall.enqueue(object : Callback<MapleData> {
                             override fun onResponse(
@@ -99,21 +127,24 @@ class secondFragment : Fragment() {
                             ) {
 
                                 val mapleinfo2 = response.body()
-                                Log.d("mapleinfo2test","mapleinfo2: ${mapleinfo2}")
+                                Log.d("mapleinfo2test", "mapleinfo2: ${mapleinfo2}")
 
                                 if (mapleinfo2 != null) {
 
-                                    Log.d("mapleinfo2success","mapleinfo2: ${mapleinfo2}")
-
-
-                                    binding.tvWorldName.text = "서버: ${mapleinfo2.worldName}"
-                                    binding.tvCharacterGender.text = "성별: ${mapleinfo2.characterGender}"
-                                    binding.ivCharacterImage.load(mapleinfo2.characterImage)
+                                    Log.d("mapleinfo2success", "mapleinfo2: ${mapleinfo2}")
+                                    binding.apply {
+                                        binding.ivCharacterImage.load(mapleinfo2.characterImage)
+                                        tvCharacterLevel.text = "성별: ${mapleinfo2.characterGender}"
+                                        tvWorldName.text = "서버: ${mapleinfo2.worldName}"
+                                        tvCharacterName.text = "닉네임: ${mapleinfo2.characterName}"
+                                        tvCharacterGuildName.text ="길드: ${mapleinfo2.characterGuildName}"
+                                        tvCharacterExpRate.text = "경험치: ${mapleinfo2.characterExpRate}%"
+                                    }
 
 
                                 } else {
 
-                                    Log.d("mapleinfo2","mapleinfo2: ${mapleinfo2}")
+                                    Log.d("mapleinfo2", "mapleinfo2: ${mapleinfo2}")
                                 }
                             }
 
@@ -130,7 +161,98 @@ class secondFragment : Fragment() {
                 } else {
 
                     Log.e("Fuxxk", "mapleinfo: ${mapleinfo}")
-                    Log.d("Howtypelog", "etInputUserName: ${binding.etInputUserName}")
+                    Log.d("Howtypelog", "etInputUserName: ${binding.searchView}")
+                    Log.d("Fuxxk", "response: ${response}")
+                }
+
+            }
+
+            override fun onFailure(call: Call<MapleData>, t: Throwable) {
+
+                Log.e("Debug", "API Request Failed", t)
+                call.cancel()
+            }
+
+        })
+
+    }
+
+    private fun blancRequest() {
+
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://open.api.nexon.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val apiservicemaple: ApiServiceMaple = retrofit.create(ApiServiceMaple::class.java)
+
+
+        val mapleNickName = binding.searchView.text.toString()
+        val mapleCall = apiservicemaple.getocid(
+            testApiKey,
+            "블랑",
+        )
+
+        mapleCall.enqueue(object : Callback<MapleData> {
+            override fun onResponse(call: Call<MapleData>, response: Response<MapleData>) {
+
+                val mapleinfo = response.body()
+
+                if (mapleinfo != null) {
+                    var getOcid = "${mapleinfo.ocid}"
+                    Log.d("getocid", "${getOcid}")
+
+                    val charaterCall = apiservicemaple.getCharacter(
+                        testApiKey,
+                        "${getOcid}",
+                        "2023-12-29"
+                    )
+                    if (getOcid != null) {
+                        Log.d("characterCall 시작직전", "${getOcid}")
+
+                        charaterCall.enqueue(object : Callback<MapleData> {
+                            override fun onResponse(
+                                call: Call<MapleData>,
+                                response: Response<MapleData>
+                            ) {
+
+                                val mapleinfo2 = response.body()
+                                Log.d("mapleinfo2test", "mapleinfo2: ${mapleinfo2}")
+
+                                if (mapleinfo2 != null) {
+
+                                    Log.d("mapleinfo2success", "mapleinfo2: ${mapleinfo2}")
+                                    binding.ivCharacterImage.load(mapleinfo2.characterImage)
+                                    binding.tvCharacterLevel.text =
+                                        "Lv:${mapleinfo2.characterLevel}"
+                                    binding.tvWorldName.text = "서버:${mapleinfo2.worldName}"
+                                    binding.tvCharacterName.text = "닉네임:${mapleinfo2.characterName}"
+                                    binding.tvCharacterGuildName.text =
+                                        "길드:${mapleinfo2.characterGuildName}"
+                                    binding.tvCharacterExpRate.text =
+                                        "경험치:${mapleinfo2.characterExpRate}%"
+
+
+                                } else {
+
+                                    Log.d("mapleinfo2", "mapleinfo2: ${mapleinfo2}")
+                                }
+                            }
+
+                            override fun onFailure(call: Call<MapleData>, t: Throwable) {
+
+                                Log.e("Debug", "API Request Failed", t)
+                                call.cancel()
+                            }
+
+                        })
+                    }
+
+
+                } else {
+
+                    Log.e("Fuxxk", "mapleinfo: ${mapleinfo}")
+                    Log.d("Howtypelog", "etInputUserName: ${binding.searchView}")
                     Log.d("Fuxxk", "response: ${response}")
                 }
 
