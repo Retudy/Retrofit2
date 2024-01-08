@@ -17,8 +17,9 @@ CoinActivity 를 실행하고 editText에 코인정보를 입력하고, 조회�
 
   
 <p align ="center">
-<img width="370" alt="스크린샷 2024-01-08 오후 7 54 18" src="https://github.com/Retudy/Retrofit2/assets/129308578/ae83ac19-a116-4330-8e42-e0917790094f">
-<img width="370" alt="스크린샷 2024-01-08 오후 7 54 18" src="https://github.com/Retudy/Retrofit2/assets/129308578/4db4e31b-6919-48c7-a248-05aecf18d431">
+  <img width="372" alt="스크린샷 2024-01-08 오후 7 54 02" src="https://github.com/Retudy/Retrofit2/assets/129308578/6ad81866-45a3-4c3e-a63b-fd8499b9cecc">
+  <img width="370" alt="스크린샷 2024-01-08 오후 7 54 18" src="https://github.com/Retudy/Retrofit2/assets/129308578/ae83ac19-a116-4330-8e42-e0917790094f">
+
 
 api문서:https://apidocs.bithumb.com/reference/%ED%98%B8%EA%B0%80-%EC%A0%95%EB%B3%B4-%EC%A1%B0%ED%9A%8C<br/>
 참고:https://www.youtube.com/watch?v=YKV1a1YkuKE
