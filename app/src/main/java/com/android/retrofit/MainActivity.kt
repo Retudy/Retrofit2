@@ -2,117 +2,62 @@ package com.android.retrofit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.viewpager2.widget.ViewPager2
+import androidx.lifecycle.lifecycleScope
+import com.android.retrofit.data.Ticker
 import com.android.retrofit.databinding.ActivityMainBinding
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val viewPagerAdapter by lazy { ViewPager2Adapter(this) } // 1. 뷰페이저2 어뎁터 초기화
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view = binding.root
         setContentView(view)
 
-        viewPager2State()
-        setupTabIcons()
-
-        TabLayoutMediator(
-            binding.tabLayout,
-            binding.viewPager2
-        ) { tab, position ->
-            tab.setText(viewPagerAdapter.getTitme(position))
-            tab.setIcon(viewPagerAdapter.getIcon(position))
-        }.attach()
-
-        pageChangeCallBack()
-        binding.viewPager2.offscreenPageLimit = viewPagerAdapter.itemCount
-
-    }
-
-    private fun viewPager2State() {
-        binding.viewPager2.apply {
-            adapter = viewPagerAdapter
-            setCurrentItem(
-                viewPagerAdapter.findFragmentTabIndex(R.string.member_second),
-                false
-            )
-            setUserInputEnabled(true) //  viewpager 의 슬라이드를 담당하는 메서드
+        binding.searchBtn.setOnClickListener {
+            //api 호출
+            lifecycleScope.launch { //코루틴스코프로 돌려봄 (1차)
+                apiRequest()
+            }
         }
     }
 
-    private fun pageChangeCallBack() {
-        binding.viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            var currentState = 0
-            var currentPosition = 0
+    suspend fun apiRequest() {
+        //retrofit 객체 생성
 
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                if (currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPosition == position) {
-                    if (currentPosition == 0) binding.viewPager2.currentItem = 4
-                    else if (currentPosition == 4) binding.viewPager2.currentItem = 0
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl("https://api.bithumb.com/") //통신할 서버 주소명 (보통 get 주소앞까지 짤라서 사용하면 됨)
+            .addConverterFactory(GsonConverterFactory.create()) //Gson,moshi 등 자신이 추가한 라이브러리를 ConverterFactory에 넣어줌
+            .build()
+        //서비스 객체 생성
+        val apiService: ApiService = retrofit.create(ApiService::class.java)
+        //Call객체 생성
+        val coinName = binding.coinEdit.text.toString()
+        val tickecall = apiService.getCoinTicker(coinName, "KRW")
+        //네트워크통신
+        tickecall.enqueue(object : Callback<Ticker> {
+            override fun onResponse(call: Call<Ticker>, response: Response<Ticker>) {
+                //요청이 된경우
+                val data = response.body()  // 여기서 response.body() 에서 조회된 데이터들을 꺼내 뷰와 데이터를 바인딩합니다.
+
+                binding.apply {
+                    resultText.append("status :${data?.status}\n")
+                    resultText.append("closing_price :${data?.data?.closing_price}\n")
+                    resultText.append("opening_price :${data?.data?.opening_price}\n")
+                    resultText.append("max_price :${data?.data?.max_price}\n")
+                    resultText.append("min_price :${data?.data?.min_price}\n")
                 }
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
             }
 
-            override fun onPageSelected(position: Int) {
-                currentPosition = position
-                super.onPageSelected(position)
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                currentState = state
-                super.onPageScrollStateChanged(state)
-            }
-        })
-    }
-
-    /**
-     * 작성자:
-     * 내용: 홈 탭에서 다른 탭으로 이동시 사용
-     * ViewPagerAdapter에서 Tab 이름을 검색하여 나온
-     * index값을 가져와 Tab 현재위치를 바꿔줌
-     * */
-    fun moveTabFragment(title: Int) {
-        val index = viewPagerAdapter.findFragmentTabIndex(title)
-        binding.viewPager2.setCurrentItem(index, false)
-    }
-
-    private fun setupTabIcons() {
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                val icon = when (tab?.position) {
-                    0 -> R.drawable.budget
-                    1 -> R.drawable.community
-                    2 -> R.drawable.home
-                    3 -> R.drawable.scrap
-                    4 -> R.drawable.mypage
-                    else -> R.drawable.pic_yoon
-                }
-                tab?.setIcon(icon)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                //반전이미지 만드는법 -> 성환님한테 피그마 물어보기
-                val icon = when (tab?.position) {
-                    0 -> R.drawable.budget
-                    1 -> R.drawable.community
-                    2 -> R.drawable.home
-                    3 -> R.drawable.scrap
-                    4 -> R.drawable.mypage
-                    else -> R.drawable.pic_yoon
-                }
-                tab?.setIcon(icon)
-            }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+            override fun onFailure(call: Call<Ticker>, t: Throwable) {
+                //요청이 안된경우
+                call.cancel()
             }
         })
     }
